@@ -3,59 +3,80 @@ import pandas as pd
 import numpy as np
 import re
 from PIL import Image
-
 st.set_page_config(page_title="AI Medical Prescription Verifier", page_icon="💊", layout="wide")
+from datetime import datetime
 
 st.markdown("""
 <style>
-.header-title {
-    font-size: 2.5em;
-    font-weight: bold;
-    color: #2E86AB;
-    margin-bottom: 10px;
+body {
+    background: linear-gradient(135deg, #7b5fcf 0%, #b798db 100%);
+    color: #fff;
 }
-.section-header {
-    font-size: 1.8em;
-    color: #2E86AB;
-    border-bottom: 3px solid #2E86AB;
-    padding-bottom: 10px;
-    margin: 20px 0 10px 0;
+.feature-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 15px rgba(123, 95, 207, 0.3);
+    margin-bottom: 20px;
 }
-.warning-box {
-    background-color: #FFE5E5;
-    border-left: 4px solid #FF6B6B;
-    padding: 15px;
-    border-radius: 5px;
+.feature-card:hover {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 25px rgba(123, 95, 207, 0.6);
+    transform: scale(1.05);
 }
-.success-box {
-    background-color: #E5F8F0;
-    border-left: 4px solid #6BCF7F;
-    padding: 15px;
-    border-radius: 5px;
+.feature-icon {
+    font-size: 50px;
+    color: #ffd700;
+    margin-bottom: 15px;
 }
-.severity-major {
-    color: white;
-    background-color: #FFA500;
-    padding: 5px 10px;
-    border-radius: 3px;
-    font-weight: bold;
+.feature-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #ffd700;
 }
-.severity-moderate {
-    color: black;
-    background-color: #FFD93D;
-    padding: 5px 10px;
-    border-radius: 3px;
-    font-weight: bold;
-}
-.severity-minor {
-    color: white;
-    background-color: #6BCF7F;
-    padding: 5px 10px;
-    border-radius: 3px;
-    font-weight: bold;
+.feature-desc {
+    font-size: 1em;
+    color: #eee;
 }
 </style>
 """, unsafe_allow_html=True)
+
+user_name = "Medical Professional"
+now = datetime.now().strftime("%A, %B %d, %Y")
+
+st.markdown(f"### Good day, {user_name}! 👋")
+st.markdown(f"#### Today is {now}")
+
+st.markdown('<h1 style="color:#ffd700;">AI Prescription Verifier Dashboard</h1>', unsafe_allow_html=True)
+
+col1, col2, col3 = st.columns(3)
+
+features = [
+    ("💉", "Single Drug Check", "Lookup medications and get personalized dosage guidance", "?page=SingleDrugCheck"),
+    ("⚡", "Multi-Drug Checker", "Analyze multiple medications for interactions", "?page=MultiDrugCheck"),
+    ("📝", "Prescription Parser", "Paste prescription text for auto-extraction and verification", "?page=PrescriptionParser"),
+    ("📸", "Upload Prescription Image", "Use OCR to analyze prescription images", "?page=ImageUpload"),
+    ("👤", "Patient Profile", "Manage patient info and medical history", "?page=PatientProfile")
+]
+
+columns = [col1, col2, col3]
+
+for i, (icon, title, desc, link) in enumerate(features):
+    with columns[i % 3]:
+        st.markdown(f"""
+        <a href="{link}" target="_blank" style="text-decoration:none;">
+            <div class="feature-card">
+                <div class="feature-icon">{icon}</div>
+                <div class="feature-title">{title}</div>
+                <div class="feature-desc">{desc}</div>
+            </div>
+        </a>
+        """, unsafe_allow_html=True)
+
 
 # Load drug database from CSV with error handling
 @st.cache_data

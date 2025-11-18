@@ -1,4 +1,3 @@
-# team-SRS
 # 💊 AI Medical Prescription Verification System
 
 A comprehensive Streamlit-based application for verifying prescriptions, checking drug interactions, recommending age-appropriate dosages, and suggesting alternative medications.
